@@ -1,0 +1,130 @@
+define make   {make --no-print-directory --file=DUT}
+define silent {>/dev/null 2>/dev/null}
+
+test {
+    name    = 1) make help
+    comment = Ausgabe der Hilfe
+    type    = param
+    cmd       {${make} help | diff - help.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 2a) make aufgabe1.converted
+    comment = Konvertiert die Datei aufgabe1.pdf in aufgabe1.converted
+    type    = param
+    cmd       {rm -f aufgabe1.converted; \
+               ${make} aufgabe1.converted ${silent}; \
+               diff aufgabe1.converted aufgabe1.converted.exp; \
+               rm -f aufgabe1.converted; }
+    expect    {^$}
+}
+
+test {
+    name    = 2b) make converted
+    comment = Konvertiert alle PDF-Dateien in .converted-Dateien
+    type    = param
+    cmd       {rm -f aufgabe1.converted aufgabe2.converted; \
+               ${make} converted ${silent}; \
+               diff aufgabe1.converted aufgabe1.converted.exp; \
+               diff aufgabe2.converted aufgabe2.converted.exp; \
+               rm -f aufgabe1.converted aufgabe2.converted; }
+    expect    {^$}
+}
+
+test {
+    name    = 3a) make aufgabe1.trimmed
+    comment = Konvertiert die Datei aufgabe1.pdf in aufgabe1.converted und aufgabe1.trimmed
+    type    = param
+    cmd       {rm -f aufgabe1.trimmed; \
+               ${make} aufgabe1.trimmed ${silent}; \
+               diff aufgabe1.converted aufgabe1.converted.exp; \
+               diff aufgabe1.trimmed aufgabe1.trimmed.exp; \
+               rm -f aufgabe1.converted aufgabe1.trimmed; }
+    expect    {^$}
+}
+
+test {
+    name    = 3b) make keinpdf.trimmed
+    comment = Konvertiert die Datei keinpdf.converted in keinpdf.trimmed
+    type    = param
+    cmd       {rm -f keinpdf.trimmed; \
+               ${make} keinpdf.trimmed ${silent}; \
+               diff keinpdf.trimmed keinpdf.trimmed.exp; \
+               rm -f keinpdf.trimmed; }
+    expect    {^$}
+}
+
+test {
+    name    = 4) make aufgabe1.converted FROM_PAGE=2
+    comment = Konvertiert die Datei aufgabe1.pdf in aufgabe1.converted (ab Seite 2)
+    type    = param
+    cmd       {rm -f aufgabe1.converted; \
+               ${make} aufgabe1.converted FROM_PAGE=2 ${silent}; \
+               diff aufgabe1.converted aufgabe1.converted_FROM_PAGE_2.exp; \
+               rm -f aufgabe1.converted; }
+    expect    {^$}
+}
+
+test {
+    name    = 5) make search-Themen
+    comment = Sucht nach "Themen"
+    type    = param
+    cmd       {rm -f aufgabe1.converted aufgabe2.converted; \
+               ${make} search-Themen > Themen.out; \
+               diff Themen.out Themen.exp; \
+               rm -f aufgabe1.converted aufgabe2.converted Themen.out; }
+    expect    {^$}
+}
+
+test {
+    name    = 6) make
+    comment = Make ohne Argument
+    type    = param
+    cmd       {rm -f aufgabe1.trimmed aufgabe2.trimmed; \
+               ${make} >/dev/null; \
+               tar -xzvf archive.tgz >/dev/null; \
+			    diff aufgabe1.trimmed aufgabe1.trimmed.exp; \
+			    diff aufgabe2.trimmed aufgabe2.trimmed.exp; \
+				rm -f aufgabe1.trimmed aufgabe2.trimmed archive.tgz; }
+    expect    {^$}
+}
+
+test {
+    name    = 7) make all
+    type    = param
+    cmd       {rm -f aufgabe1.trimmed aufgabe2.trimmed; \
+               ${make} all >/dev/null; \
+               tar -xzvf archive.tgz >/dev/null; \
+			    diff aufgabe1.trimmed aufgabe1.trimmed.exp; \
+			    diff aufgabe2.trimmed aufgabe2.trimmed.exp; \
+				rm -f aufgabe1.trimmed aufgabe2.trimmed archive.tgz; }
+    expect    {^$}
+}
+
+test {
+    name    = 8) make archive
+    type    = param
+    cmd       {rm -f aufgabe1.trimmed aufgabe2.trimmed; \
+               ${make} archive >/dev/null; \
+               tar -xzvf archive.tgz >/dev/null; \
+			    diff aufgabe1.trimmed aufgabe1.trimmed.exp; \
+			    diff aufgabe2.trimmed aufgabe2.trimmed.exp; \
+				rm -f aufgabe1.trimmed aufgabe2.trimmed archive.tgz; }
+    expect    {^$}
+}
+
+test {
+    name    = 9) make archive.tgz
+    type    = param
+    cmd       {rm -f aufgabe1.trimmed aufgabe2.trimmed; \
+               ${make} archive.tgz >/dev/null; \
+               tar -xzvf archive.tgz >/dev/null; \
+			    diff aufgabe1.trimmed aufgabe1.trimmed.exp; \
+			    diff aufgabe2.trimmed aufgabe2.trimmed.exp; \
+				rm -f aufgabe1.trimmed aufgabe2.trimmed archive.tgz; }
+    expect    {^$}
+}
+
+
+

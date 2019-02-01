@@ -1,0 +1,12 @@
+Usage:
+words.sh -h | words.sh --help
+  print this help and exit
+
+words.sh [OPTS] WORD [OPTS]
+  where WORD is a word or a phrase that has a wiktionary entry
+    (it is not allowed to start with "-" but can contain spaces)
+  where OPTS is one or more of
+    -i, --idiom         extract and print the idioms
+    -s, --synonym       extract and print the synonyms
+    -y, --hyphenation   extract and print the hyphenation
+    -m, --meaning       extract and print the meanings

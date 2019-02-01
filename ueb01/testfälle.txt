@@ -1,0 +1,6 @@
+Fehlerfälle:
+
+- wenn keine Datei im akutellen Verzeichnis ist.
+- wenn kein Speicher mehr vorhanden ist, um die Textdatei mytextfiles zu erstellen.
+- wenn man dem Programm einen Parameter mit gibt, passiert nichts
+- Falscher Name = Fehlerausgabe 

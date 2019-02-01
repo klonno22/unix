@@ -1,0 +1,24 @@
+Usage:
+changetext.sh -h | changetext.sh --help
+
+prints this help and exits
+
+changetext.sh OP [CHAR1] [CHAR2] ...
+
+provides a simple text manipulation tool. A call consists of one to indefinite 
+calls of the following OPs and their parameters. The text is read from stdin 
+and the manipulated text is written to stdout.
+
+OP is one of:
+
+  -r|--replace - replaces all characters CHAR1 in the given text with CHAR2. 
+                 CHAR1 and CHAR2 have to be letters (A-Z,a-z) or digits (0-9).
+
+  -d|--delete - deletes all characters CHAR1 in the given text. CHAR1 has to 
+                be a letter (A-Z,a-z) or a digit (0-9).
+
+  -u|--to-uppercase - replaces all lowercase characters in the given text with
+          their uppercase equivalent (i.e. a -> A, b -> B, ..).
+
+  -l|--to-lowercase - replaces all uppercase characters in the given text with
+          their lowercase equivalent (i.e. A -> a, B -> b, ..).

@@ -1,0 +1,96 @@
+
+test {
+    name    = 1. Hilfe
+    comment = normaler Hilfeaufruf
+    type    = param
+    cmd       {DUT --help | diff - help.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 2. Return code bei gueltigen Aufruf
+    comment = Gueltiger Aufruf soll einen return code von 0 haben
+    type    = param
+    cmd       {DUT Teppich -m >/dev/null && echo "ok"}
+    expect    {^ok$}
+}
+
+test {
+    name    = 3. Bedeutung
+    comment = Die Bedeutung von Teppich
+    type    = param
+    cmd       {DUT Teppich -m | diff - Teppich_m.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 4. Redewendung (Idiom)
+    comment = Redewendungen mit Teppich
+    type    = param
+    cmd       {DUT Teppich -i | diff - Teppich_i.exp}
+    expect -i {^$}
+}
+
+test {
+    name    = 5. Synomyme
+    comment = Synonyme von Teppich
+    type    = param
+    cmd       {DUT Teppich -s | diff - Teppich_s.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 6. Worttrennung
+    comment = Worttrennung von Teppich
+    type    = param
+    cmd       {DUT Teppich -y | diff - Teppich_y.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 7. Alle Parameter
+    comment = Bedeutungen, Worttrennung, Synonyme und Redewendungen (Teppich)
+    type    = param
+    cmd       {DUT Teppich -m -y -s -i | diff - Teppich_mysi.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 8. Redewendung als Wort
+    comment = Bedeutungen von "auf dem Teppich bleiben"
+    type    = param
+    cmd       {DUT "auf dem Teppich bleiben" -m | diff - auf_dem_Teppich_bleiben_m.exp}
+    expect    {^$}
+}
+
+test {
+    name    = 9. Mehr als 4 Parameter
+    comment = Testet ob es einen Fehler bei mehr als 4 Parametern gibt
+    type    = param
+    cmd       {DUT Teppich -m -y -s -i -y 2>/dev/null || echo "ungueltig"}
+    expect    {^ungueltig$}
+}
+
+test {
+    name    = 10. Mehr als 1 Wort
+    comment = Testet ob es einen Fehler bei mehr als einem Wort gibt
+    type    = param
+    cmd       {DUT Teppich Teppich 2>/dev/null || echo "ungueltig"}
+    expect    {^ungueltig$}
+}
+
+test {
+    name    = 11. Kein Wort angegeben
+    comment = Testet ob es einen Fehler gibt wenn kein Wort vorhanden
+    type    = param
+    cmd       {DUT 2>/dev/null || echo "ungueltig"}
+    expect    {^ungueltig$}
+}
+
+test {
+    name    = 12. Kein Parameter angegeben
+    comment = Testet ob es einen Fehler gibt wenn kein Parameter vorhanden
+    type    = param
+    cmd       {DUT Teppich 2>/dev/null || echo "ungueltig"}
+    expect    {^ungueltig$}
+}
